@@ -13,7 +13,7 @@ class Brewery(models.Model):
     def __str__(self):
         return self.brewery_name + ' - ' + self.brewery_location
 
-
+#
 # Beer class will store all beers that are submitted byt users
 
 class Beer(models.Model):
