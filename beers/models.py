@@ -13,23 +13,26 @@ class Brewery(models.Model):
     def __str__(self):
         return self.brewery_name + ' - ' + self.brewery_location
 
-#
-# Beer class will store all beers that are submitted byt users
-
-class Beer(models.Model):
+class BeerStyle(models.Model):
     BEER_STYLES = (
         ('ASA', 'American Strong Ale'), ('AMW', 'American Wheat'), ('BAW', 'Barleywine'), ('BNA', 'Brown Ale'),
         ('CAC', 'California Common'), ('ESB', 'Extra Special Bitter'), ('HEF', 'Hefeweizen'),
         ('IPA', 'India Pale Ale'), ('OKT', 'Oktoberfest'), ('PAL', 'Pale Ale'), ('PIL', 'Pilsner'),
         ('PTR', 'Porter'), ('QUD', 'Quadrupel'), ('STT', 'Stout'), ('VNL', 'Vienna Lager')
     )
+    style = models.CharField(max_length=3, choices=BEER_STYLES)
 
+    def __str__(self):
+        return self.style
+
+
+# Beer class will store all beers that are submitted by users
+
+class Beer(models.Model):
     beer_name = models.CharField(max_length=100)
-    beer_brewery = models.ForeignKey(Brewery, on_delete=models.CASCADE)  # all beers by certain brewery deleted w/ brewery
-    beer_style = models.CharField(max_length=3, choices=BEER_STYLES)  # possible styles are chosen from list
+    beer_brewery = models.ForeignKey(Brewery, on_delete=models.CASCADE)  # all beers by brewery deleted w/ brewery
+    beer_style = models.ForeignKey(BeerStyle, on_delete=models.CASCADE)    # possible styles are chosen from list
     beer_logo = models.URLField(max_length=100)
 
     def __str__(self):
         return self.beer_name + ' - ' + str(self.beer_brewery)
-
-

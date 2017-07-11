@@ -1,25 +1,15 @@
-from django.http import Http404
-from django.shortcuts import render
-from .models import Beer
-from .models import Brewery
+from django.views import generic
+from .models import Beer, Brewery
 
 
-# List of all beers !!!WILL NOT LOOK SAME WHEN FINISHED!!!
-def index(request):
-    all_beers = Beer.objects.all()
-    return render(request, 'beers/index.html', {'all_beers': all_beers})
+class IndexView(generic.ListView):
+    template_name = 'beers/index.html'
+    context_object_name = 'all_breweries'
+
+    def get_queryset(self):
+        return Brewery.objects.all()
 
 
-# List of all breweries
-def breweries(request):
-    all_breweries = Brewery.objects.all()
-    return render(request, 'beers/breweries.html', {'all_breweries': all_breweries})
-
-
-# Beer details
-def detail(request, beer_id):
-    try:
-        beer = Beer.objects.get(id=beer_id)
-    except Beer.DoesNotExist:
-        raise Http404("Beer Does Not Exist!")
-    return render(request, 'app1/detail.html', {'beer': beer})
+class DetailView(generic.DetailView):
+    model = Brewery
+    template_name = 'beers/detail.html'
