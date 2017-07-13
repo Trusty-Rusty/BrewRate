@@ -1,13 +1,13 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Beer
 from .models import Brewery
 
 
 # List of all beers !!!WILL NOT LOOK SAME WHEN FINISHED!!!
 def index(request):
-    all_beers = Beer.objects.all()
-    return render(request, 'beers/index.html', {'all_beers': all_beers})
+    all_breweries = Brewery.objects.all()
+    return render(request, 'beers/index.html', {'all_breweries': all_breweries})
 
 
 # List of all breweries
@@ -17,9 +17,6 @@ def breweries(request):
 
 
 # Beer details
-def detail(request, beer_id):
-    try:
-        beer = Beer.objects.get(id=beer_id)
-    except Beer.DoesNotExist:
-        raise Http404("Beer Does Not Exist!")
-    return render(request, 'app1/detail.html', {'beer': beer})
+def detail(request, brewery_id):
+    brewery_id = get_object_or_404(Brewery, pk=brewery_id)
+    return render(request, 'beers/detail.html', {'brewery': brewery_id})

@@ -1,15 +1,15 @@
 
-{% if all_beers %}
+{% if all_breweries %}
 
-    <h3>Here are all of my beers:</h3>
+    <h3>Here are all of the tracked breweries:</h3>
 
     <ul>
-        {% for beer in all_beers %}
-        <li><a href="/beers/{{ beer.id }}">{{ beer.beer_name }}</a> </li>
+        {% for brewery in all_breweries %}
+        <li><a href="{% url 'beers:detail' brewery.id %}">{{ brewery.brewery_name }}</a> </li>
         {% endfor %}
     </ul>
 
 {% else %}
-    <h3>No Beers To Display!</h3>
+    <h3>No Breweries To Display!</h3>
 
 {% endif %}

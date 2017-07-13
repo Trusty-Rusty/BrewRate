@@ -1,0 +1,10 @@
+<img src="{{ brewery.brewery_logo }}">
+
+<h1>{{ brewery.brewery_name }}</h1>
+<h3>{{ brewery.brewery_location }}</h3>
+
+<ul>
+    {% for beer in brewery.beer_set.all %}
+        <li>{{ beer.beer_name }} - {{ beer.beer_style }}</li>
+    {% endfor %}
+</ul>
