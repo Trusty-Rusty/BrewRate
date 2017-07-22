@@ -1,0 +1,10 @@
+body{
+    background: white url("images/blur-light.jpeg");
+}
+
+.navbar{
+    border-radius: 0;
+}
+.navbar-brand{
+    font-family: 'Satisfy', cursive;
+}

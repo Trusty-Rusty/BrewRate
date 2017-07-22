@@ -1,15 +1,24 @@
+{% extends 'beers/base.html' %}
 
-{% if all_breweries %}
+{% block body %}
 
-    <h3>Here are all of the tracked breweries:</h3>
+        <ul>
+            {% for brewery in object_list %}
+            <li>
+                <a href="{% url 'beers:detail' brewery.id %}">{{ brewery.brewery_name }}</a>
+                <form action="{% url 'beers:brewery-delete' brewery.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="brewery_id" value="{{ brewery.id }}" />
+                    <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+                </form>
+                <form action="{% url 'beers:brewery-update' brewery.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="brewery_id" value="{{ brewery.id }}" />
+                    <button type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                </form>
+            </li>
 
-    <ul>
-        {% for brewery in all_breweries %}
-        <li><a href="{% url 'beers:detail' brewery.id %}">{{ brewery.brewery_name }}</a> </li>
-        {% endfor %}
-    </ul>
+            {% endfor %}
+        </ul>
 
-{% else %}
-    <h3>No Breweries To Display!</h3>
-
-{% endif %}
+{% endblock %}

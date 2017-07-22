@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 
 # Brewery class will store all breweries submitted by users when adding beers.
@@ -8,7 +9,11 @@ class Brewery(models.Model):
     brewery_name = models.CharField(max_length=100)
     brewery_location = models.CharField(max_length=250)
     brewery_founding = models.IntegerField()
-    brewery_logo = models.URLField(max_length=100)
+    brewery_logo = models.FileField()
+
+    # forward to detail page when new album is created
+    def get_absolute_url(self):
+        return reverse('beers:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.brewery_name + ' - ' + self.brewery_location
@@ -28,6 +33,7 @@ class Beer(models.Model):
     beer_brewery = models.ForeignKey(Brewery, on_delete=models.CASCADE)  # all beers by certain brewery deleted w/ brewery
     beer_style = models.CharField(max_length=3, choices=BEER_STYLES)  # possible styles are chosen from list
     beer_logo = models.URLField(max_length=100)
+    beer_fav = models.BooleanField(default=False)
 
     def __str__(self):
         return self.beer_name + ' - ' + str(self.beer_brewery)

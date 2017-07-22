@@ -1,10 +1,19 @@
-<img src="{{ brewery.brewery_logo }}">
+{% extends 'beers/base.html' %}
+<title>{% block title %}Brewery Detail{% endblock %}</title>
 
-<h1>{{ brewery.brewery_name }}</h1>
-<h3>{{ brewery.brewery_location }}</h3>
 
-<ul>
-    {% for beer in brewery.beer_set.all %}
-        <li>{{ beer.beer_name }} - {{ beer.beer_style }}</li>
+{% block body %}
+    <img src="{{ brewery.brewery_logo.url }}">
+
+    <h1>{{ brewery.brewery_name }}</h1>
+    <h3>{{ brewery.brewery_location }}</h3>
+
+   {% for beer in brewery.beer_set.all %}
+        {{ beer.beer_name }}
+        {% if beer.beer_fav %}
+            <img src="14.png" />
+        {% endif %}
+        <br>
     {% endfor %}
-</ul>
+
+{% endblock %}
