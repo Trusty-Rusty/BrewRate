@@ -6,8 +6,8 @@ from .models import Brewery, Beer, Style
 
 # List of all beers !!!WILL NOT LOOK SAME WHEN FINISHED!!!
 def index(request):
-    all_breweries = Brewery.objects.all()
-    return render(request, 'beers/index.html', {'all_breweries': all_breweries})
+    all_beers = Beer.objects.all()
+    return render(request, 'beers/index.html', {'all_beers': all_beers})
 
 
 # User signup
