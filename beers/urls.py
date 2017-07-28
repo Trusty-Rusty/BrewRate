@@ -5,15 +5,15 @@ from .import views as beers_views
 app_name = 'beers'
 
 urlpatterns = [
+    # /
+    url(r'^$', views.IndexView.as_view(), name='index'),
+
     # /beers/signup/
     url(r'^signup/$', views.signup, name='signup'),     # error - "beers_views.signup"?
 
-    # /
-    url(r'^$', views.index, name='index'),
-
     # /123/
-    url(r'^(?P<beer_id>[0-9]+)/$', views.detail, name='detail'),
+    url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
 
     # /breweries/
-    url(r'^breweries$', views.breweries, name='breweries')
+    # url(r'^breweries$', views.breweries, name='breweries')
 ]

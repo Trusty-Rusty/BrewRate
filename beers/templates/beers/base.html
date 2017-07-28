@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     {% load staticfiles %}
-    <title>{% block title %}BrewRate{% endblock %}</title> <!-- "BrewRate" shows unless block is filled elsewhere to override -->
+    <title>{% block title %}BrewRate{% endblock %}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Bellefair" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'beers/style.css' %}" />
@@ -28,13 +28,13 @@
         <!--navbar items -->
         <div class="collapse navbar-collapse" id="topNavBar"> <!-- these items get collapsed in topNavBar -->
             <ul class="nav navbar-nav">
-                <li class="">
+                <li class="active">
                     <a href="{% url 'beers:index' %}">
                         <span class="glyphicon glyphicon-grain"></span>&nbsp;
                         Beers
                     </a>
                 </li>
-                <li class="active">
+                <li class="">
                     <a href="#">
                         <span class="glyphicon glyphicon-grain"></span>&nbsp;
                         Breweries

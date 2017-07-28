@@ -1,7 +1,7 @@
-<img src="{{ brewery.brewery_logo }}">
+<img src="{{ beer.beer_logo }}">
 
-<h1>{{ brewery.brewery_name }}</h1>
-<h3>{{ brewery.brewery_location }}</h3>
+<h1>{{ beer.beer_name }}</h1>
+
 
 <ul>
     {% for beer in brewery.beer_set.all %}

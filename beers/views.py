@@ -1,15 +1,27 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.views import generic
+from django.views.generic import View
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Brewery, Beer, Style
 
+# Generic views
+class IndexView(generic.ListView):
+    template_name = 'beers/index.html'
 
-# List of all beers !!!WILL NOT LOOK SAME WHEN FINISHED!!!
-def index(request):
-    all_beers = Beer.objects.all()
-    return render(request, 'beers/index.html', {'all_beers': all_beers})
+    def get_queryset(self):
+        return Beer.objects.all()
 
 
+class DetailView(generic.DetailView):
+        model = Beer
+        template_name = 'beers/detail.html'
+
+
+
+# -----------------------------------------------------------------------------------
 # User signup
 def signup(request):
     if request.method == 'POST':
@@ -26,14 +38,3 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'beers/signup.html', {'form': form})
 
-
-# List of all breweries
-def breweries(request):
-    all_breweries = Brewery.objects.all()
-    return render(request, 'beers/breweries.html', {'all_breweries': all_breweries})
-
-
-# Beer details
-def detail(request, brewery_id):
-    brewery_id = get_object_or_404(Brewery, pk=brewery_id)
-    return render(request, 'beers/detail.html', {'brewery': brewery_id})
