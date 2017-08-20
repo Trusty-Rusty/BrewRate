@@ -1,0 +1,10 @@
+{% extends 'beers/beer_list.html' %}
+
+
+{% block brewery_detail %}
+
+<img src="{{ brewery.brewery_logo }}">
+
+<h1>{{ brewery.brewery_name }}</h1>
+
+{% endblock %}

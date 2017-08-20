@@ -22,20 +22,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'beers:index' %}">BrewRate</a>
+            <a class="navbar-brand" href="{% url 'beers:main' %}">BrewRate</a>
         </div>
 
         <!--navbar items -->
         <div class="collapse navbar-collapse" id="topNavBar"> <!-- these items get collapsed in topNavBar -->
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a href="{% url 'beers:index' %}">
+                    <a href="{% url 'beers:beers' %}">
                         <span class="glyphicon glyphicon-grain"></span>&nbsp;
                         Beers
                     </a>
                 </li>
                 <li class="">
-                    <a href="#">
+                    <a href="{% url 'beers:breweries' %}">
                         <span class="glyphicon glyphicon-grain"></span>&nbsp;
                         Breweries
                     </a>
@@ -51,7 +51,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
-                    <a href="{% url 'beers:index' %}">          <!-- change url back -->
+                    <a href="{% url 'beers:main' %}">          <!-- change url back -->
                         <span class="glyphicon glyphicon-plus"></span>&nbsp;
                         &nbsp; Add Brewery
                     </a>
@@ -66,7 +66,19 @@
         </div>
     </div>
 </nav>
-{% block content %}
+{% block brewery_list %}
 {% endblock %}
+
+{% block beer_list %}
+{% endblock %}
+
+{% block beer_detail %}
+{% endblock %}
+
+{% block add_beer %}
+{% endblock %}
+
+
+
 </body>
 </html>

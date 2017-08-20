@@ -1,13 +1,21 @@
 {% extends 'beers/base.html' %}
 
-{% block content %}
-{% if object_list %}
+
+{% block beer_list %}
+
+{% block brewery_detail %}
+{% endblock %}
+
+{% block main_page_detail %}
+{% endblock %}
+
+{% if all_beers %}
 
     <h3>Here are all of the tracked beers:</h3>
 
     <ul>
-        {% for beer in object_list %}
-        <li><a href="{% url 'beers:detail' beer.id %}">{{ beer.beer_name }}</a>
+        {% for beer in all_beers %}
+        <li><a href="{% url 'beers:beer_detail' beer.id %}">{{ beer.beer_name }}</a>
             <!--add avg beer rating-->
             <!--add thumbnail?-->
         </li>

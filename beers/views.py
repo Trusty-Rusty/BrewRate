@@ -1,24 +1,42 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.views import generic
-from django.views.generic import View
+from django.views.generic import View, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Brewery, Beer, Style
 
-# Generic views
-class IndexView(generic.ListView):
-    template_name = 'beers/index.html'
 
-    def get_queryset(self):
-        return Beer.objects.all()
+# Landing page with list of most recent beers and and invite to create user account
+class MainPage(generic.ListView):
+    model = Beer
+    context_object_name = 'all_beers'
+    template_name = 'beers/main.html'
 
 
-class DetailView(generic.DetailView):
-        model = Beer
-        template_name = 'beers/detail.html'
+# List of all breweries using generic included ListView
+class AllBreweries(generic.ListView):
+    model = Brewery
+    context_object_name = 'all_breweries'
+    template_name = 'beers/breweries_list.html'
 
+
+# List of all Beers
+class AllBeers(generic.ListView):
+    model = Beer
+    context_object_name = 'all_beers'
+    template_name = 'beers/beer_list.html'
+
+
+class BeerDetailView(generic.DetailView):
+    model = Beer
+    template_name = 'beers/beer_detail.html'
+
+
+class BreweryDetailView(generic.DetailView):
+    model = Brewery
+    template_name = 'beers/brewery_detail.html'
 
 
 # -----------------------------------------------------------------------------------

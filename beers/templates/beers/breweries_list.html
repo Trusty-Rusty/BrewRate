@@ -1,0 +1,22 @@
+{% extends 'beers/base.html' %}
+
+{% block brewery_list %}
+{% if all_breweries %}
+
+    <h3>Here are all of the tracked breweries:</h3>
+
+    <ul>
+        {% for brewery in all_breweries %}
+        <li><a href="{% url 'beers:brewery_detail' brewery.id %}">{{ brewery.brewery_name }}</a>
+            <!--add avg beer rating-->
+            <!--add thumbnail?-->
+        </li>
+        {% endfor %}
+    </ul>
+
+{% else %}
+    <h3>No Breweries To Display!</h3>
+
+{% endif %}
+
+{% endblock %}
