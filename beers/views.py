@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.views import generic
-from django.views.generic import View, ListView
+from django.views.generic import View, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
@@ -9,11 +9,15 @@ from .models import Brewery, Beer, Style
 
 
 # Landing page with list of most recent beers and and invite to create user account
-class MainPage(generic.ListView):
-    model = Beer
-    context_object_name = 'all_beers'
+class MainPage(TemplateView):
+
+    #context_object_name = 'recent_beers'
     template_name = 'beers/main.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(MainPage, self).get_context_data(**kwargs)
+        context['recent_beers'] = Beer.objects.all() [:5]
+        return context
 
 # List of all breweries using generic included ListView
 class AllBreweries(generic.ListView):

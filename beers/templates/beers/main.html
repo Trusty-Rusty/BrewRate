@@ -1,6 +1,27 @@
 {% extends 'beers/beer_list.html' %}
 
-{% block main_page_detail %}
+{% block title %} {% endblock %}
+
+
+{% block content_1 %}
     <h1>Welcome to BrewRate!</h1>
-    <h3>Here are a few of our most recently added beers.</h3>
+    <h3>Your Source For The Best In Beer</h3>
+{% endblock %}
+
+{% block content_2 %}
+    <h3>Here are a few of our most recently added beers!</h3>
+    <ul>
+        {% for beer in recent_beers %}
+            <li><a href="{% url 'beers:beer_detail' beer.id %}">{{ beer.beer_name }}</a>
+                <a href="{% url 'beers:brewery_detail' beer.id %}">- {{ beer.beer_brewery }}</a>
+                <!--add avg beer rating-->
+                <!--add thumbnail?-->
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+
+{% block content_3 %}
+
 {% endblock %}
