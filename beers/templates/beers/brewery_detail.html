@@ -1,10 +1,35 @@
-{% extends 'beers/beer_list.html' %}
+{% extends 'beers/base.html' %}
+
+{% block title %}BrewRate - {{ brewery.brewery_name }}{% endblock %}
 
 
-{% block brewery_detail %}
+{% block content_1 %}
+    <h1> {{ brewery.brewery_name }} </h1>
+    <img src="{{ brewery.brewery_logo }}">
+    <ul>
+        <li>{{ brewery.brewery_location }}</li>
+        <li>Founded: {{ brewery.brewery_founding }}</li>
+    </ul>
+    {% if brewery.brewery_photo %}
+        <img src="{{ brewery.brewery_photo }}" style="width:200px;height:200px;">
+    {% endif %}
 
-<img src="{{ brewery.brewery_logo }}">
 
-<h1>{{ brewery.brewery_name }}</h1>
+{% endblock %}
+
+{% block content_2 %}
+    <h3>Beers By {{ brewery.brewery_name }}</h3>
+    <ul>
+        {% for beer in brewery.beer_set.all %}
+            <li><a href="{% url 'beers:beer_detail' beer.id %}">{{ beer.beer_name }}</a>
+                <!--add avg beer rating-->
+                <!--add thumbnail?-->
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+
+{% block content_3 %}
 
 {% endblock %}

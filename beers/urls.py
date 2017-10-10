@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^beers/(?P<pk>[0-9]+)/$', views.BeerDetailView.as_view(), name='beer_detail'),
 
     # beers/123/
-    url(r'^breweries/(?P<pk>[0-9]+)/$', views.BreweryDetailView.as_view(), name='brewery_detail'),
+    url(r'^breweries/(?P<pk>[0-9]+)/$', views.BreweryDetailPage.as_view(), name='brewery_detail'),
 
     # /beers/signup/
     # url(r'^signup/$', views.signup, name='signup'),     # error - "beers_views.signup"?
