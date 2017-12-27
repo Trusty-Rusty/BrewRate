@@ -1,5 +1,36 @@
-<img src="{{ beer.beer_logo }}">
+{% extends 'beers/base.html' %}
 
-<h1>{{ beer.beer_name }}</h1>
+{% block title %}BrewRate - {{ beer.beer_name }}{% endblock %}
+
+
+{% block content_1 %}
+    <h1> {{ beer.beer_name }} </h1>
+    <img src="{{ beer.beer_logo }}">
+    <ul>
+        <li>{{ beer.beer_style }}</li>
+        <li>ABV: {{ beer.beer_abv }}</li>
+        <li>SRM: {{ beer.beer_srm }}</li>
+    </ul>
+    {% if brewery.brewery_photo %}
+        <img src="{{ brewery.brewery_photo }}" style="width:200px;height:200px;">
+    {% endif %}
+{% endblock %}
+
+{% block content_2 %}
+    <h3>Other Beers In The {{ brewery.brewery_name }} Style: </h3>
+    <ul>
+        {% for beer in brewery.beer_set.all %}
+            <li><a href="{% url 'beers:beer_detail' beer.id %}">{{ beer.beer_name }}</a>
+                <!--add avg beer rating-->
+                <!--add thumbnail?-->
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+
+{% block content_3 %}
+
+{% endblock %}
 
 

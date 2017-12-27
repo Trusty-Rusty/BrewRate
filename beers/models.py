@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 # Added breweries that can be assigned to beers as they are added.
 class Brewery(models.Model):
+    brewery_add_date = models.DateTimeField(null=True, blank=True, auto_now_add=True)
     brewery_name = models.CharField(max_length=100)
     brewery_location = models.CharField(max_length=250)
     brewery_founding = models.PositiveSmallIntegerField()                # year of founding
@@ -28,6 +29,7 @@ class Style(models.Model):
 
 # Beer class will store all beers that are submitted by users and link them to styles and breweries
 class Beer(models.Model):
+    beer_add_date = models.DateTimeField(null=True, blank=True, auto_now_add=True)
     beer_name = models.CharField(max_length=100)
     beer_brewery = models.ForeignKey(Brewery, on_delete=models.PROTECT)  # reference to brewery
     beer_style = models.ForeignKey(Style, on_delete=models.PROTECT)  # reference to style
