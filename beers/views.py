@@ -4,8 +4,6 @@ from django.core.paginator import Paginator
 from django.views import generic
 from django.views.generic import View, TemplateView, ListView, DetailView
 from django.views.generic.detail import SingleObjectMixin
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Brewery, Beer, Rating
 from django.db.models import Avg
@@ -66,8 +64,8 @@ class AllBeers(generic.ListView):
         beer_ratings = {}
         for beer in all_beers:
             avg_rating = Rating.objects.filter(rating_beer__beer_name=beer).aggregate(Avg('rating_score')).values()[0]
-            beer_ratings[beer] = avg_rating
-
+            short_key = beer.beer_name
+            beer_ratings[short_key] = avg_rating
         context['all_beers'] = all_beers
         context['beer_ratings'] = beer_ratings
         return context
@@ -75,6 +73,24 @@ class AllBeers(generic.ListView):
 
 class BeerDetailView(generic.DetailView):
     model = Beer
+
+    def get_context_data(self, **kwargs):
+        context = super(BeerDetailView, self).get_context_data(**kwargs)
+        context['all_ratings'] = Rating.objects.all()
+        return context
+
+    def already_rated(self):
+
+
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+
+
+class AddBeerView(generic.CreateView):
+    model = Beer
+    fields = ['beer_name', 'beer_brewery', 'beer_style', 'beer_abv', 'beer_srm', 'beer_logo', 'beer_photo']
 
 
 # -----------------------------------------------------------------------------------

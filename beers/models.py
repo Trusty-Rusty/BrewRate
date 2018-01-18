@@ -26,13 +26,13 @@ class Style(models.Model):
     def __str__(self):
         return self.style_name
 
-
 # Beer class will store all beers that are submitted by users and link them to styles and breweries
 class Beer(models.Model):
     beer_add_date = models.DateTimeField(null=True, blank=True, auto_now_add=True)
     beer_name = models.CharField(max_length=100)
     beer_brewery = models.ForeignKey(Brewery, on_delete=models.PROTECT)  # reference to brewery
     beer_style = models.ForeignKey(Style, on_delete=models.PROTECT)  # reference to style
+    beer_avg_rating = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
     beer_abv = models.DecimalField(null=True, max_digits=3, decimal_places=1)      # abv in x.x or xx.x format
     beer_srm = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(99)])     # beer color in SRM
     beer_logo = models.URLField(max_length=100)

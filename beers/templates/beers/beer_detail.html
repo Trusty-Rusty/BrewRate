@@ -7,10 +7,22 @@
     <h1> {{ beer.beer_name }} </h1>
     <img src="{{ beer.beer_logo }}">
     <ul>
+        <li>{{ beer.beer_brewery }}</li>
         <li>{{ beer.beer_style }}</li>
         <li>ABV: {{ beer.beer_abv }}</li>
         <li>SRM: {{ beer.beer_srm }}</li>
+        <li>Average User Rating: {{ beer.beer_avg_rating }}</li>
     </ul>
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+           Rate This Beer!
+        </button>
+        <div class="dropdown-menu">
+            {% for scores in all_ratings%}
+            <a class="dropdown-item">{{ scores.rating_score }}</a>
+            {% endfor %}
+        </div>
+    </div>
     {% if brewery.brewery_photo %}
         <img src="{{ brewery.brewery_photo }}" style="width:200px;height:200px;">
     {% endif %}

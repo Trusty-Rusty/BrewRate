@@ -1,0 +1,158 @@
+ <h1>Add A Beer</h1>
+
+ <html lang="en-us"><head>
+<title>Add beer | Django site admin</title>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/admin/js/actions.js"></script>
+<script type="text/javascript" src="/static/admin/js/urlify.js"></script>
+<script type="text/javascript" src="/static/admin/js/prepopulate.js"></script>
+<script type="text/javascript" src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+
+<meta name="robots" content="NONE,NOARCHIVE">
+</head>
+<body class=" app-beers model-beer change-form" data-admin-utc-offset="0">
+<!-- Container -->
+<div id="container">
+    <!-- Header -->
+    <div id="header">
+        <div id="branding">
+<h1 id="site-name"><a href="/admin/">Django administration</a></h1>
+        </div>
+        <div id="user-tools">
+                Welcome,
+                <strong>admin</strong>.
+                    <a href="/">View site</a> /
+                <a href="/admin/password_change/">Change password</a> /
+                <a href="/admin/logout/">Log out</a>
+        </div>
+    </div>
+    <!-- END Header -->
+
+<div class="breadcrumbs">
+<a href="/admin/">Home</a>
+› <a href="/admin/beers/">Beers</a>
+› <a href="/admin/beers/beer/">Beers</a>
+› Add beer
+</div>
+    <!-- Content -->
+    <div id="content" class="colM">
+        <h1>Add beer</h1>
+        <div id="content-main">
+<form enctype="multipart/form-data" action="" method="post" id="beer_form" novalidate=""><input type="hidden" name="csrfmiddlewaretoken" value="9lZ48bGnw5UhYBLo0rTrOTI0sx171ImWQs8GBCMyrIg2Zi4iUWjPscw36yy0MyrX">
+<div>
+  <fieldset class="module aligned ">
+        <div class="form-row field-beer_name">
+                <div>
+                        <label class="required" for="id_beer_name">Beer name:</label>
+                            <input type="text" name="beer_name" id="id_beer_name" required="" class="vTextField" maxlength="100">
+                </div>
+        </div>
+        <div class="form-row field-beer_brewery">
+                <div>
+                        <label class="required" for="id_beer_brewery">Beer brewery:</label>
+                            <div class="related-widget-wrapper">
+     <select name="beer_brewery" required="" id="id_beer_brewery">
+  <option value="" selected="">---------</option>
+  <option value="1">Stone Brewing Company</option>
+  <option value="2">4 Hands Brewing Company</option>
+  <option value="3">Ballast Point Brewing Company</option>
+    </select>
+        <a class="related-widget-wrapper-link
+        change-related"
+        id="change_id_beer_brewery"
+        data-href-template="/admin/beers/brewery/__fk__/change/?_to_field=id&amp;_popup=1"
+        title="Change selected brewery"><img
+        src="/static/admin/img/icon-changelink.svg"
+        alt="Change"></a>
+        <a class="related-widget-wrapper-link add-related"
+           id="add_id_beer_brewery"
+           href="/admin/beers/brewery/add/?_to_field=id&amp;_popup=1"
+           title="Add another brewery"><img src="/static/admin/img/icon-addlink.svg"
+            alt="Add"></a>
+        <a class="related-widget-wrapper-link delete-related"
+           id="delete_id_beer_brewery"
+            data-href-template="/admin/beers/brewery/__fk__/delete/?_to_field=id&amp;_popup=1"
+            title="Delete selected brewery"><img src="/static/admin/img/icon-deletelink.svg"
+         alt="Delete">
+        </a>
+</div>
+                </div>
+        </div>
+        <div class="form-row field-beer_style">
+                <div>
+                        <label class="required" for="id_beer_style">Beer style:</label>
+                            <div class="related-widget-wrapper">
+    <select name="beer_style" required="" id="id_beer_style">
+  <option value="" selected="">---------</option>
+  <option value="1">American Pale Ale</option>
+  <option value="2">India Pale Ale</option>
+  <option value="3">Marzen/Oktoberfest</option>
+  <option value="4">Brown</option>
+</select>
+        <a class="related-widget-wrapper-link change-related" id="change_id_beer_style" data-href-template="/admin/beers/style/__fk__/change/?_to_field=id&amp;_popup=1" title="Change selected style"><img src="/static/admin/img/icon-changelink.svg" alt="Change"></a><a class="related-widget-wrapper-link add-related" id="add_id_beer_style" href="/admin/beers/style/add/?_to_field=id&amp;_popup=1" title="Add another style"><img src="/static/admin/img/icon-addlink.svg" alt="Add"></a><a class="related-widget-wrapper-link delete-related" id="delete_id_beer_style" data-href-template="/admin/beers/style/__fk__/delete/?_to_field=id&amp;_popup=1" title="Delete selected style"><img src="/static/admin/img/icon-deletelink.svg" alt="Delete"></a>
+</div>
+                </div>
+        </div>
+        <div class="form-row field-beer_avg_rating">
+                <div>
+                        <label for="id_beer_avg_rating">Beer avg rating:</label>
+                            <input type="number" name="beer_avg_rating" step="0.1" id="id_beer_avg_rating">
+                </div>
+        </div>
+        <div class="form-row field-beer_abv">
+                <div>
+                        <label class="required" for="id_beer_abv">Beer abv:</label>
+                            <input type="number" name="beer_abv" step="0.1" required="" id="id_beer_abv">
+                </div>
+        </div>
+        <div class="form-row field-beer_srm">
+                <div>
+                        <label class="required" for="id_beer_srm">Beer srm:</label>
+                            <input type="number" name="beer_srm" id="id_beer_srm" required="" class="vIntegerField" min="0">
+                </div>
+        </div>
+        <div class="form-row field-beer_logo">
+                <div>
+                        <label class="required" for="id_beer_logo">Beer logo:</label>
+                            <input type="url" name="beer_logo" id="id_beer_logo" required="" class="vURLField" maxlength="100">
+                </div>
+        </div>
+        <div class="form-row field-beer_photo">
+                <div>
+                        <label for="id_beer_photo">Beer photo:</label>
+                            <input type="file" name="beer_photo" id="id_beer_photo">
+                </div>
+        </div>
+</fieldset>
+
+<div class="submit-row">
+<input type="submit" value="Save" class="default" name="_save">
+<input type="submit" value="Save and add another" name="_addanother">
+<input type="submit" value="Save and continue editing" name="_continue">
+</div>
+    <script type="text/javascript" id="django-admin-form-add-constants" src="/static/admin/js/change_form.js" data-model-name="beer">
+    </script>
+<script type="text/javascript" id="django-admin-prepopulated-fields-constants" src="/static/admin/js/prepopulate_init.js" data-prepopulated-fields="[]">
+</script>
+</div>
+</form></div>
+
+
+        <br class="clear">
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+
+
+</body></html>

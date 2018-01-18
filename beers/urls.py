@@ -1,6 +1,5 @@
 from django.conf.urls import url
 from .import views
-from .import views as beers_views
 
 app_name = 'beers'
 
@@ -16,6 +15,8 @@ urlpatterns = [
 
     # beers/123/
     url(r'^beers/(?P<pk>[0-9]+)/$', views.BeerDetailView.as_view(), name='beer_detail'),
+
+    url(r'^beers/add/$', views.AddBeerView.as_view(), name='add_beer'),
 
     # beers/123/
     url(r'^breweries/(?P<pk>[0-9]+)/$', views.BreweryDetailPage.as_view(), name='brewery_detail'),
