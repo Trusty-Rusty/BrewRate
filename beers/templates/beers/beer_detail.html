@@ -13,22 +13,46 @@
         <li>SRM: {{ beer.beer_srm }}</li>
         <li>Average User Rating: {{ beer.beer_avg_rating }}</li>
     </ul>
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-           Rate This Beer!
-        </button>
-        <div class="dropdown-menu">
-            {% for scores in all_ratings%}
-            <a class="dropdown-item">{{ scores.rating_score }}</a>
-            {% endfor %}
-        </div>
-    </div>
+
     {% if brewery.brewery_photo %}
         <img src="{{ brewery.brewery_photo }}" style="width:200px;height:200px;">
     {% endif %}
 {% endblock %}
 
 {% block content_2 %}
+        {% if current_rating %}
+        {% for value in star_rating %}
+            <span class="glyphicon glyphicon-star"></span>
+        {% endfor %}
+
+        {% else %}
+            <form method="POST" action=""> {% csrf_token %}
+                <select name="rating_score" required id="id_rating_score">
+                    <option value="1">*</option>
+                    <option value="2">**</option>
+                    <option value="3">***</option>
+                    <option value="4">****</option>
+                    <option value="5">*****</option>
+                </select>
+
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                       Rate This Beer!
+                    </button>
+                </div>
+            </form>
+
+            <div>
+                <form method="POST" class="post-form">{% csrf_token %} {{ form.as_p }}
+                    <button type="submit" class="save btn btn-default">Send</button>
+                </form>
+            </div>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block content_3 %}
     <h3>Other Beers In The {{ brewery.brewery_name }} Style: </h3>
     <ul>
         {% for beer in brewery.beer_set.all %}
@@ -38,10 +62,6 @@
             </li>
         {% endfor %}
     </ul>
-{% endblock %}
-
-
-{% block content_3 %}
 
 {% endblock %}
 
