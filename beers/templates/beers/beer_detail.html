@@ -11,7 +11,7 @@
         <li>{{ beer.beer_style }}</li>
         <li>ABV: {{ beer.beer_abv }}</li>
         <li>SRM: {{ beer.beer_srm }}</li>
-        <li>Average User Rating: {{ beer.beer_avg_rating }}</li>
+        <li>Average User Rating: {{ avg_rating }}</li>
     </ul>
 
     {% if brewery.brewery_photo %}
@@ -20,42 +20,26 @@
 {% endblock %}
 
 {% block content_2 %}
-        {% if current_rating %}
+    {% if current_rating %}
         {% for value in star_rating %}
             <span class="glyphicon glyphicon-star"></span>
         {% endfor %}
 
         {% else %}
-            <form method="POST" action=""> {% csrf_token %}
-                <select name="rating_score" required id="id_rating_score">
-                    <option value="1">*</option>
-                    <option value="2">**</option>
-                    <option value="3">***</option>
-                    <option value="4">****</option>
-                    <option value="5">*****</option>
-                </select>
-
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                       Rate This Beer!
-                    </button>
-                </div>
+        <div>
+            <form method="POST" class="post-form">{% csrf_token %} {{ form.as_p }}
+                <button type="submit" class="save btn btn-default">Send</button>
             </form>
-
-            <div>
-                <form method="POST" class="post-form">{% csrf_token %} {{ form.as_p }}
-                    <button type="submit" class="save btn btn-default">Send</button>
-                </form>
-            </div>
+        </div>
     {% endif %}
 
 {% endblock %}
 
 
 {% block content_3 %}
-    <h3>Other Beers In The {{ brewery.brewery_name }} Style: </h3>
+    <h3>Other Beers In The {{ beer.beer_style }} Style: </h3>
     <ul>
-        {% for beer in brewery.beer_set.all %}
+        {% for beer in style_beers %}
             <li><a href="{% url 'beers:beer_detail' beer.id %}">{{ beer.beer_name }}</a>
                 <!--add avg beer rating-->
                 <!--add thumbnail?-->

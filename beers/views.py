@@ -67,7 +67,7 @@ class AllBeers(ListView):
         all_beers = Beer.objects.order_by('beer_name')
         beer_ratings = {}
         for beer in all_beers:
-            avg_rating = Rating.objects.filter(rating_beer__beer_name=beer).aggregate(Avg('rating_score')).values()[0]
+            avg_rating = round(Rating.objects.filter(rating_beer__beer_name=beer).aggregate(Avg('rating_score')).values()[0], 2)
             short_key = beer.beer_name
             beer_ratings[short_key] = avg_rating
         context['all_beers'] = all_beers
@@ -85,6 +85,7 @@ class BeerDetailView(FormMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(BeerDetailView, self).get_context_data(**kwargs)
         context['form'] = RatingForm(initial={'post': self.object.id})
+        context['style_beers'] = Beer.objects.filter(beer_style=self.object.beer_style).exclude(beer_name=self.object)
         try:
             rating = Rating.objects.get(rating_user=self.request.user, rating_beer=self.object).rating_score
             context['current_rating'] = int(rating)
@@ -97,7 +98,8 @@ class BeerDetailView(FormMixin, DetailView):
 
         except ObjectDoesNotExist:
             print('Beer not yet rated by the current user.')
-
+        avg_rating = round(Rating.objects.filter(rating_beer__beer_name=self.object).aggregate(Avg('rating_score')).values()[0], 1)
+        context['avg_rating'] = avg_rating
         return context
 
     def post(self, request, *args, **kwargs):
@@ -110,14 +112,6 @@ class BeerDetailView(FormMixin, DetailView):
             return super(BeerDetailView, self).form_valid(form)
         else:
             return self.form_invalid(form)
-
-
-
-
-        #if not request.user.is_authenticated:
-         #   return HttpResponseForbidden()
-
-
 
 
 class AddBeerView(CreateView):
