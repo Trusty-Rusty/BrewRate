@@ -80,7 +80,7 @@ class BeerDetailView(FormMixin, DetailView):
     form_class = RatingForm
 
     def get_success_url(self):
-        return reverse('beer_detail', kwargs={'pk': self.object.id})
+        return reverse('beers:beer_detail', kwargs={'pk': self.object.id})
 
     def get_context_data(self, **kwargs):
         context = super(BeerDetailView, self).get_context_data(**kwargs)
@@ -98,8 +98,11 @@ class BeerDetailView(FormMixin, DetailView):
 
         except ObjectDoesNotExist:
             print('Beer not yet rated by the current user.')
-        avg_rating = round(Rating.objects.filter(rating_beer__beer_name=self.object).aggregate(Avg('rating_score')).values()[0], 1)
-        context['avg_rating'] = avg_rating
+
+        if Rating.objects.filter(rating_beer__beer_name=self.object).exists():
+            context['avg_rating'] = round(Rating.objects.filter(rating_beer__beer_name=self.object).aggregate(Avg('rating_score')).values()[0],1)
+        else:
+            context['avg_rating'] = 'Not Yet Rated'
         return context
 
     def post(self, request, *args, **kwargs):
@@ -109,7 +112,7 @@ class BeerDetailView(FormMixin, DetailView):
         if form.is_valid():
             rating = Rating.objects.create(rating_beer=self.object, rating_user=self.request.user, rating_score=form.cleaned_data['rating_score'])
             rating.save()
-            return super(BeerDetailView, self).form_valid(form)
+            return self.form_valid(form)
         else:
             return self.form_invalid(form)
 

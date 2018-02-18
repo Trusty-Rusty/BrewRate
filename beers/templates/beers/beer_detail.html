@@ -21,6 +21,7 @@
 
 {% block content_2 %}
     {% if current_rating %}
+        <span>Your Rating:</span>
         {% for value in star_rating %}
             <span class="glyphicon glyphicon-star"></span>
         {% endfor %}
