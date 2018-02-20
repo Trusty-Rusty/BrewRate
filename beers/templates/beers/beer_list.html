@@ -14,6 +14,7 @@
             <li><a href="{% url 'beers:beer_detail' beer.id %}">{{ beer.beer_name }}</a>
                 <a href="{% url 'beers:brewery_detail' beer.beer_brewery_id %}">- {{ beer.beer_brewery }}</a>
                 <a></a>
+
                 <!--add thumbnail?-->
             </li>
         {% endfor %}
