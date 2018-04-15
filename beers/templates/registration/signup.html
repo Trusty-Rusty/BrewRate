@@ -1,6 +1,8 @@
 {% extends 'beers/base.html' %}
 
-{% block content %}
+{% block title %} Signup {% endblock %}
+
+{% block content_1 %}
   <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}

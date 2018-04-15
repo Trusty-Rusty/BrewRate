@@ -1,7 +1,7 @@
-from django.db import models
 from django.core.validators import MaxValueValidator
 from django.contrib.auth.models import User
-
+from django.db import models
+from django.urls import reverse
 
 # Added breweries that can be assigned to beers as they are added.
 class Brewery(models.Model):
@@ -14,6 +14,9 @@ class Brewery(models.Model):
 
     def __str__(self):
         return self.brewery_name
+
+    def get_absolute_url(self):
+        return reverse('beers:brewery_detail', kwargs={'pk': self.pk})
 
 # beer styles to be assigned to new beers.  Possibly searchable.
 class Style(models.Model):
@@ -40,6 +43,9 @@ class Beer(models.Model):
 
     def __str__(self):
         return self.beer_name
+
+    def get_absolute_url(self):
+        return reverse('beers:beer_detail', kwargs={'pk': self.pk})
 
 
 # user ratings for each beer-user pair.  Join table with many-to-many relationship

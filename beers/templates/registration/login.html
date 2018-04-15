@@ -1,0 +1,13 @@
+{% extends 'beers/base.html' %}
+
+{% block title %}Please Login{% endblock %}
+
+{% block content_1 %}
+    <h2>Please Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <a href="{% url 'beers:signup' %}">Register As a New User</a>
+{% endblock %}

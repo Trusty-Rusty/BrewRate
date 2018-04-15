@@ -28,7 +28,15 @@
         <!--navbar items -->
         <div class="collapse navbar-collapse" id="topNavBar"> <!-- these items get collapsed in topNavBar -->
             <ul class="nav navbar-nav">
-                <li class="active">
+                {% if user.is_authenticated %}
+                    <li class="">
+                        <a href="{% url 'beers:user_detail' user.id %}">
+                            <span class="glyphicon glyphicon-grain"></span>&nbsp;
+                            Your Profile
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="">
                     <a href="{% url 'beers:beers' %}">
                         <span class="glyphicon glyphicon-grain"></span>&nbsp;
                         Beers
@@ -51,22 +59,29 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
-                    <a href="{% url 'beers:main' %}">          <!-- change url back -->
+                    <a href="{% url 'beers:add_brewery' %}">          <!-- change url back -->
                         <span class="glyphicon glyphicon-plus"></span>&nbsp;
                         &nbsp; Add Brewery
                     </a>
                 </li>
                 <li class="">
-                    <a href="{% url 'beers:main' %}">          <!-- change url back -->
+                    <a href="{% url 'beers:add_beer' %}">          <!-- change url back -->
                         <span class="glyphicon glyphicon-plus"></span>&nbsp;
                         &nbsp; Add Beer
                     </a>
                 </li>
                 <li class="">
-                    <a href="#">
-                        <span class="glyphicon glyphicon-off"></span>&nbsp;
-                        Logout
-                    </a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'beers:logout' %}">
+                            <span class="glyphicon glyphicon-off"></span>&nbsp;
+                            Logout
+                        </a>
+                    {% else %}
+                        <a href="{% url 'beers:login' %}">
+                            <span class="glyphicon glyphicon-off"></span>&nbsp;
+                            Login
+                        </a>
+                    {% endif %}
                 </li>
             </ul>
         </div>
