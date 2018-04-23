@@ -30,7 +30,7 @@
             <ul class="nav navbar-nav">
                 {% if user.is_authenticated %}
                     <li class="">
-                        <a href="{% url 'beers:user_detail' user.id %}">
+                        <a href="{% url 'beers:user_detail' %}">
                             <span class="glyphicon glyphicon-grain"></span>&nbsp;
                             Your Profile
                         </a>
@@ -50,11 +50,11 @@
                 </li>
             </ul>
 
-            <form class="navbar-form navbar-left" role="search" method="get" action="#">
+            <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'beers:beers_search' %}">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="q" value="">
+                    <input type="text" class="form-control" name="q" value="{{ request.GET.q }}">
                 </div>
-                <button type="submit" class="btn btn-default">Search</button>
+                <button type="submit" class="btn btn-default">Search Beers</button>
             </form>
 
             <ul class="nav navbar-nav navbar-right">

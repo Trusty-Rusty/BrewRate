@@ -1,0 +1,23 @@
+{% extends 'beers/base.html' %}
+
+{% block title %}Search Beers{% endblock %}
+
+
+{% block content_1 %}
+    <h1>Beers Matching Your Search:</h1>
+{% endblock %}
+
+{% block content_2 %}
+    <ul>
+        {% for beer in beer_list %}
+            <li><a href="{% url 'beers:beer_detail' beer.id %}">{{ beer.beer_name }}</a>
+                <a href="{% url 'beers:brewery_detail' beer.beer_brewery_id %}">- {{ beer.beer_brewery }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+
+{% block content_3 %}
+
+{% endblock %}

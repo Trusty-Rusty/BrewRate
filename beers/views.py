@@ -3,12 +3,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
+import operator
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, View
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import FormMixin
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.db.models import Avg
+from django.db.models import Avg, Q
 from django.urls import reverse_lazy
 from .forms import RatingForm #UserLoginForm, BreweryForm
 from .models import Beer, Brewery, Rating, User
@@ -131,6 +132,26 @@ class BeerDetailView(FormMixin, DetailView):
             return self.form_invalid(form)
 
 
+class BeersSearchView(ListView):
+    model = Beer
+    template_name = 'beers/beer_search.html'
+
+    def get_queryset(self):
+        result = super(BeersSearchView, self).get_queryset()
+
+        query = self.request.GET.get('q')
+        if query:
+            query_list = query.split()
+            result = result.filter(
+                reduce(operator.and_,
+                       (Q(beer_name__icontains=q) for q in query_list)) |
+                reduce(operator.and_,
+                       (Q(beer_brewery__brewery_name__icontains=q) for q in query_list))
+            )
+
+        return result
+
+
 class AddBeerView(CreateView):
     model = Beer
     fields = ['beer_name', 'beer_brewery', 'beer_style', 'beer_abv', 'beer_srm', 'beer_logo', 'beer_photo']
@@ -141,21 +162,14 @@ class AddBreweryView(CreateView):
     fields = ['brewery_name', 'brewery_location', 'brewery_founding', 'brewery_logo', 'brewery_photo']
 
 
-class UserDetailView(LoginRequiredMixin, DetailView):
+class UserDetailView(LoginRequiredMixin, TemplateView):
     template_name = 'beers/user_detail.html'
-    model = User
     login_url = '/login/'
 
     def get_context_data(self, **kwargs):
         context = super(UserDetailView, self).get_context_data(**kwargs)
         context['user_beers'] = Rating.objects.filter(rating_user=self.request.user)
         return context
-
-'''
-class UserLoginView(TemplateView):
-    template_name = 'beers/login.html'
-    form_class = UserLoginForm
-'''
 
 
 class UserLoginView(View):
@@ -168,19 +182,15 @@ class UserLoginView(View):
             if user.is_active:
                 login(request, user)
 
-                return HttpResponseRedirect('/form') #Why does this argument get ignored in favor of LOGIN_REDIRECT_URL?
+                return HttpResponseRedirect('/form')
             else:
                 return HttpResponse("Inactive user.")
         else:
             return HttpResponseRedirect(settings.LOGIN_URL)
 
         #return render(request, "beers/main.html")
-'''
-class LogoutView(View):
-    def get(self, request):
-        logout(request)
-        return HttpResponseRedirect(settings.LOGIN_URL)
-'''
+
+
 class SignupView(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('beers:login')

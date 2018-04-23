@@ -3,6 +3,7 @@
 {% block title %}Add A New Brewery{% endblock %}
 
 {% block content_1 %}
+        <h1>Add A New Brewery</h1>
 <form action="" method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Send message" />
